@@ -1,5 +1,4 @@
 # AlpineLinux with a glibc and Oracle Java 8
-
 FROM alpine:3.7
 MAINTAINER Daniel Wojtucki
 
@@ -11,8 +10,6 @@ ENV GLIBC_VERSION=2.27-r0 \
     JAVA_PATH=2f38c3b165be4555a1fa6e98c45e0808 \
     JAVA_PACKAGE=server-jre \
     JAVA_HOME=/opt/jdk
-
-#http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/server-jre-8u161-linux-x64.tar.gz
 
 RUN cd /tmp && \
     # install glibc
@@ -59,6 +56,10 @@ RUN cd /tmp && \
            $JAVA_HOME/jre/lib/oblique-fonts \
            $JAVA_HOME/jre/lib/plugin.jar \
            /tmp/* /var/cache/apk/* && \
-    apk --update del build-dependencies
+    apk --update del build-dependencies && \
+    # add bash to this container
+    apk --update add bash
 
-    ENV PATH=${PATH}:${JAVA_HOME}/bin
+COPY bashrc /root/.bashrc
+
+ENV PATH=${PATH}:${JAVA_HOME}/bin
