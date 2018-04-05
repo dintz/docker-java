@@ -1,6 +1,5 @@
 # AlpineLinux with the GNU C Library, Bash and Oracle Java 8
 FROM alpine:3.7
-MAINTAINER Daniel Wojtucki
 
 # Versions and constants for the RUN command
 ENV GLIBC_VERSION=2.27-r0 \
@@ -64,3 +63,5 @@ RUN cd /tmp && \
 COPY bashrc /root/.bashrc
 
 ENV PATH=${PATH}:${JAVA_HOME}/bin
+
+LABEL maintainer="Daniel Wojtucki"
