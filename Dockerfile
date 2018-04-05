@@ -1,4 +1,4 @@
-# AlpineLinux with a glibc and Oracle Java 8
+# AlpineLinux with the GNU C Library, Bash and Oracle Java 8
 FROM alpine:3.7
 MAINTAINER Daniel Wojtucki
 
@@ -13,6 +13,7 @@ ENV GLIBC_VERSION=2.27-r0 \
 
 RUN cd /tmp && \
     # install glibc
+    # as discribed in https://github.com/sgerrand/alpine-pkg-glibc
     apk --update --virtual build-dependencies add ca-certificates wget && \
     wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
@@ -21,10 +22,12 @@ RUN cd /tmp && \
     apk add glibc-${GLIBC_VERSION}.apk && \
     apk add glibc-bin-${GLIBC_VERSION}.apk glibc-i18n-${GLIBC_VERSION}.apk && \
     /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
+    # add bash to container
+    apk --update add bash && \
     # download JDK
     wget --header "Cookie: oraclelicense=accept-securebackup-cookie;" \
     http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PATH}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz && \
-    # setup JDK
+    # setup JDK and remove needless stuff
     mkdir /opt && \
     tar -xzf ${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz && \
     mv jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} $JAVA_HOME && \
@@ -56,9 +59,7 @@ RUN cd /tmp && \
            $JAVA_HOME/jre/lib/oblique-fonts \
            $JAVA_HOME/jre/lib/plugin.jar \
            /tmp/* /var/cache/apk/* && \
-    apk --update del build-dependencies && \
-    # add bash to this container
-    apk --update add bash
+    apk --update del build-dependencies
 
 COPY bashrc /root/.bashrc
 
