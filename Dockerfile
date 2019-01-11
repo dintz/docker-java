@@ -21,8 +21,8 @@ RUN cd /tmp && \
     apk add glibc-${GLIBC_VERSION}.apk && \
     apk add glibc-bin-${GLIBC_VERSION}.apk glibc-i18n-${GLIBC_VERSION}.apk && \
     /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
-    # add bash to container
-    apk --update add bash && \
+    # add bash & curl to container
+    apk --update add bash curl && \
     # download JDK
     wget --header "Cookie: oraclelicense=accept-securebackup-cookie;" \
     http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PATH}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz && \
