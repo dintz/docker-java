@@ -2,11 +2,11 @@
 FROM alpine:3.7
 
 # Versions and constants for the RUN command
-ENV GLIBC_VERSION=2.27-r0 \
+ENV GLIBC_VERSION=2.28-r0 \
     JAVA_VERSION_MAJOR=8 \
-    JAVA_VERSION_MINOR=161 \
+    JAVA_VERSION_MINOR=191 \
     JAVA_VERSION_BUILD=12 \
-    JAVA_PATH=2f38c3b165be4555a1fa6e98c45e0808 \
+    JAVA_PATH=2787e4a523244c269598db4e85c51e0c \
     JAVA_PACKAGE=server-jre \
     JAVA_HOME=/opt/jdk
 
@@ -14,7 +14,7 @@ RUN cd /tmp && \
     # install glibc
     # as discribed in https://github.com/sgerrand/alpine-pkg-glibc
     apk --update --virtual build-dependencies add ca-certificates wget && \
-    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://raw.githubusercontent.com/sgerrand/alpine-pkg-glibc/master/sgerrand.rsa.pub && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-${GLIBC_VERSION}.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-bin-${GLIBC_VERSION}.apk && \
     wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/glibc-i18n-${GLIBC_VERSION}.apk && \
