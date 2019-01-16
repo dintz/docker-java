@@ -4,9 +4,9 @@ FROM alpine:3.7
 # Versions and constants for the RUN command
 ENV GLIBC_VERSION=2.28-r0 \
     JAVA_VERSION_MAJOR=8 \
-    JAVA_VERSION_MINOR=191 \
-    JAVA_VERSION_BUILD=12 \
-    JAVA_PATH=2787e4a523244c269598db4e85c51e0c \
+    JAVA_VERSION_MINOR=202 \
+    JAVA_VERSION_BUILD=08 \
+    JAVA_PATH=1961070e4c9b4e26a04e7f5a083f551e \
     JAVA_PACKAGE=server-jre \
     JAVA_HOME=/opt/jdk
 
